@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Latex 2 SVG - quick?</title>
+</head>
+<body>
+    <h3>Please always insert a valid formula or latex will cry</h3>
+    <textarea name="" id="formula" cols="30" rows="10">a(t)= \text{cost} \\
+v(t)= v_0 + at \\
+s(t)= s_1 + v_0 t + \frac{1}{2} a t^2 \\
+\text{Very long formula} \\
+1+1 = 2 \\</textarea>
+    <button id="submit">Render</button>
+    <div id="result"></div>
+    
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        $("#submit").click(function () {
+            data = { formula: $("#formula").val() };
+            $.ajax({
+                type : "POST",
+                url : "{{ url_for('renderPOST') }}",
+                data: JSON.stringify(data, null, '\t'),
+                contentType: 'application/json;charset=UTF-8',
+                success: function(result) {
+                    $("#result").html(result)
+                }
+            });
+        });
+    </script>
+</body>
+</html>
